@@ -1,7 +1,9 @@
 CONVERT_TO = halcyon
 
 LTO_ENABLE := no
-OLED_ENABLE := no
+ifndef HLC_NONE
+	OLED_ENABLE := no
+endif
 
 CONFIG_H += $(USER_PATH)/splitkb/converter/config.h
 
