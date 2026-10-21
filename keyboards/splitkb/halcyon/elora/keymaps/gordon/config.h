@@ -35,9 +35,8 @@
     {k11A, k11B, k11C, k11D, k11E, KC_NO, KC_NO} \
 }
 
-// Trackpad (right half): cursor movement only.
+// Trackpad (right half): no clicks, no scrolling (glide stays on).
 // The module config is loaded after this file, so these switches are
 // read by users/halcyon_modules/splitkb/hlc_cirque_trackpad/config.h.
 #define HLC_CIRQUE_DISABLE_TAP    // no tap-to-click
 #define HLC_CIRQUE_DISABLE_SCROLL // no edge/circular scroll
-#define HLC_CIRQUE_DISABLE_GLIDE  // no cursor glide after lifting the finger
