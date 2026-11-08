@@ -8,4 +8,3 @@ ENCODER_MAP_ENABLE = yes
 USER_NAME := halcyon_modules
 
 SRC += halcyon_overrides.c
-SRC += layer_report.c
