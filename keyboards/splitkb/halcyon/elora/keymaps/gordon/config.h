@@ -40,3 +40,6 @@
 // read by users/halcyon_modules/splitkb/hlc_cirque_trackpad/config.h.
 #define HLC_CIRQUE_DISABLE_TAP    // no tap-to-click
 #define HLC_CIRQUE_DISABLE_SCROLL // no edge/circular scroll
+
+// Monitor status from the PC (monitor_status.c), forwarded to the other half.
+#define SPLIT_TRANSACTION_IDS_USER USER_MONITOR_SYNC
