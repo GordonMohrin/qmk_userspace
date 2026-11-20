@@ -25,6 +25,7 @@
 #define MONITOR_TIMEOUT 15000
 #define LED_KEY_MAIN 71
 #define LED_KEY_REMOTE 72
+#define MONITOR_LED_VAL 80
 
 enum { MON_NONE = 0, MON_MAIN = 1, MON_REMOTE = 2 };
 
@@ -59,6 +60,14 @@ void housekeeping_task_user(void) {
     if (!is_keyboard_master()) {
         return;
     }
+    // QMK skips the indicators while the lighting is off. "Off" therefore
+    // becomes solid black (not saved; EEPROM keeps "off"), so keys 9 and 0
+    // can still show the status. The other half follows via the RGB sync.
+    if (!rgb_matrix_is_enabled()) {
+        rgb_matrix_enable_noeeprom();
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv_noeeprom(0, 0, 0);
+    }
     uint8_t s = host_status;
     if (s != MON_NONE && timer_elapsed32(host_seen) > MONITOR_TIMEOUT) {
         s = host_status = MON_NONE;
@@ -81,7 +90,8 @@ static void set_led(uint8_t index, uint8_t led_min, uint8_t led_max, uint8_t h, 
         rgb_matrix_set_color(index, 0, 0, 0);
         return;
     }
-    hsv_t hsv = {h, s, rgb_matrix_get_val()};
+    // Fixed brightness: visible even when the rest of the board is dark.
+    hsv_t hsv = {h, s, MONITOR_LED_VAL};
     rgb_t rgb = hsv_to_rgb(hsv);
     rgb_matrix_set_color(index, rgb.r, rgb.g, rgb.b);
 }
